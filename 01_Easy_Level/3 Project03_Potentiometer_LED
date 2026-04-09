@@ -1,1 +1,40 @@
+/*
+   គម្រោងទី៣៖ គ្រប់គ្រងពន្លឺ LED ដោយ Potentiometer
+   Arduino UNO R4 WiFi
+   រៀនប្រើ Analog Input និង PWM Output
+*/
 
+int potPin = A0;      // Potentiometer ភ្ជាប់នៅ Analog Pin A0
+int ledPin = 9;       // LED ភ្ជាប់នៅ PWM Pin 9 (សំខាន់៖ ត្រូវជា PWM pin)
+
+int potValue = 0;     // រក្សាទុកតម្លៃពី Potentiometer (0 - 1023)
+int brightness = 0;   // រក្សាទុកពន្លឺ LED (0 - 255)
+
+void setup() {
+  // កំណត់ Pin របស់ LED ជា OUTPUT
+  pinMode(ledPin, OUTPUT);
+  
+  // បើក Serial Monitor ដើម្បីមើលតម្លៃ
+  Serial.begin(9600);
+  Serial.println("គម្រោងទី៣៖ គ្រប់គ្រងពន្លឺ LED ដោយ Potentiometer រួចរាល់!");
+  Serial.println("បង្វិល Potentiometer ដើម្បីផ្លាស់ប្តូរពន្លឺ LED");
+}
+
+void loop() {
+  // អានតម្លៃពី Potentiometer
+  potValue = analogRead(potPin);
+  
+  // បំប្លែងតម្លៃពី 0-1023 ទៅ 0-255 (សម្រាប់ PWM)
+  brightness = map(potValue, 0, 1023, 0, 255);
+  
+  // គ្រប់គ្រងពន្លឺ LED ដោយ PWM
+  analogWrite(ledPin, brightness);
+  
+  // បង្ហាញតម្លៃនៅ Serial Monitor (សម្រាប់ការសិក្សា)
+  Serial.print("តម្លៃ Potentiometer: ");
+  Serial.print(potValue);
+  Serial.print("  →  ពន្លឺ LED: ");
+  Serial.println(brightness);
+  
+  delay(100);   // រង់ចាំតិចតួច ដើម្បីកុំឱ្យ Serial Monitor បង្ហាញញាប់ពេក
+}
