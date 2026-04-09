@@ -1,1 +1,22 @@
+/*
+   Project01: Blink LED មូលដ្ឋាន
+   Arduino UNO R4 WiFi
+   គម្រោងដំបូងសម្រាប់អ្នកចាប់ផ្តើម
+*/
 
+int ledPin = 13;   // កំណត់ Pin 13 សម្រាប់ LED
+
+void setup() {
+  // កំណត់ Pin 13 ជា OUTPUT
+  pinMode(ledPin, OUTPUT);
+}
+
+void loop() {
+  // បើក LED
+  digitalWrite(ledPin, HIGH);
+  delay(1000);      // រង់ចាំ 1 វិនាទី
+
+  // បិទ LED
+  digitalWrite(ledPin, LOW);
+  delay(1000);      // រង់ចាំ 1 វិនាទី
+}
