@@ -1,1 +1,42 @@
+/*
+   គម្រោងទី៤៖ LDR រកពន្លឺ (បើងងឹតបើក LED)
+   Arduino UNO R4 WiFi
+   រៀនប្រើ LDR ដើម្បីគ្រប់គ្រងពន្លឺដោយស្វ័យប្រវត្តិ
+*/
 
+int ldrPin = A0;      // LDR ភ្ជាប់នៅ Analog Pin A0
+int ledPin = 13;      // LED ភ្ជាប់នៅ Pin 13
+
+int ldrValue = 0;     // រក្សាទុកតម្លៃពី LDR (0 - 1023)
+int threshold = 500;  // តម្លៃកំណត់ (Threshold) - អ្នកអាចកែតម្លៃនេះតាមកន្លែងពិត
+
+void setup() {
+  // កំណត់ Pin របស់ LED ជា OUTPUT
+  pinMode(ledPin, OUTPUT);
+  
+  // បើក Serial Monitor ដើម្បីមើលតម្លៃ LDR
+  Serial.begin(9600);
+  Serial.println("គម្រោងទី៤៖ LDR រកពន្លឺ (បើងងឹតបើក LED) រួចរាល់!");
+  Serial.println("បើងងឹត LDR នឹងបើក LED ដោយស្វ័យប្រវត្តិ");
+}
+
+void loop() {
+  // អានតម្លៃពី LDR
+  ldrValue = analogRead(ldrPin);
+  
+  // បង្ហាញតម្លៃនៅ Serial Monitor
+  Serial.print("តម្លៃ LDR: ");
+  Serial.print(ldrValue);
+  
+  // បើតម្លៃ LDR តិចជាង Threshold (ងងឹត) → បើក LED
+  if (ldrValue < threshold) {
+    digitalWrite(ledPin, HIGH);     // បើក LED
+    Serial.println(" → ងងឹត! បើក LED");
+  } 
+  else {
+    digitalWrite(ledPin, LOW);      // បិទ LED
+    Serial.println(" → មានពន្លឺ! បិទ LED");
+  }
+  
+  delay(200);   // រង់ចាំ 0.2 វិនាទី ដើម្បីកុំឱ្យ Serial Monitor បង្ហាញញាប់ពេក
+}
