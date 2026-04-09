@@ -1,1 +1,39 @@
+/*
+   គម្រោងទី២: បញ្ជា LED ដោយ Button
+   Arduino UNO R4 WiFi
+   រៀនប្រើ Digital Input និង Output រួមគ្នា
+*/
 
+int buttonPin = 2;     // កំណត់ Pin សម្រាប់ Button
+int ledPin = 13;       // កំណត់ Pin សម្រាប់ LED (ដូចគម្រោងទី១)
+
+int buttonState = 0;   // អថេរ រក្សាទុកស្ថានភាព Button (HIGH ឬ LOW)
+
+void setup() {
+  // កំណត់ Pin របស់ LED ជា OUTPUT
+  pinMode(ledPin, OUTPUT);
+  
+  // កំណត់ Pin របស់ Button ជា INPUT
+  pinMode(buttonPin, INPUT_PULLUP);   // បើក Internal Pull-up Resistor (សំខាន់ណាស់)
+  
+  // បើក Serial Monitor ដើម្បីមើលតម្លៃ Button
+  Serial.begin(9600);
+  Serial.println("គម្រោងទី២៖ បញ្ជា LED ដោយ Button រួចរាល់!");
+}
+
+void loop() {
+  // អានស្ថានភាព Button
+  buttonState = digitalRead(buttonPin);
+
+  // បើចុច Button (តម្លៃ = LOW ព្រោះប្រើ Pull-up)
+  if (buttonState == LOW) {
+    digitalWrite(ledPin, HIGH);     // បើក LED
+    Serial.println("Button ត្រូវបានចុច → LED ភ្លឺ");
+  } 
+  else {
+    digitalWrite(ledPin, LOW);      // បិទ LED
+    Serial.println("Button មិនត្រូវបានចុច → LED ងងឹត");
+  }
+
+  delay(50);   // រង់ចាំតិចតួច ដើម្បីកាត់បន្ថយ Button bouncing
+}
