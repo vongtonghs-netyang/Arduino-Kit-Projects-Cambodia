@@ -1,1 +1,42 @@
+/*
+   គម្រោងទី១០៖ Flame Sensor រកភ្លើង (ប្រើ Flame Sensor + Buzzer)
+   Arduino UNO R4 WiFi
+   រៀនរកភ្លើង និងបន្លឺសំឡេងជូនដំណឹងសុវត្ថិភាព
+*/
 
+int flamePin = 2;      // Flame Sensor ភ្ជាប់នៅ Digital Pin 2
+int buzzerPin = 8;     // Passive Buzzer ភ្ជាប់នៅ Pin 8
+int ledPin = 13;       // LED បង្ហាញស្ថានភាព (បន្ថែម)
+
+int flameState = 0;    // រក្សាទុកស្ថានភាព Flame Sensor
+
+void setup() {
+  pinMode(flamePin, INPUT);      // Flame Sensor ជា INPUT
+  pinMode(buzzerPin, OUTPUT);    // Buzzer ជា OUTPUT
+  pinMode(ledPin, OUTPUT);       // LED ជា OUTPUT
+  
+  Serial.begin(9600);
+  Serial.println("គម្រោងទី១០៖ Flame Sensor រកភ្លើង + Buzzer រួចរាល់!");
+  Serial.println("បើរកឃើញភ្លើង → Buzzer នឹងបន្លឺសំឡេង និង LED ភ្លឺ");
+}
+
+void loop() {
+  flameState = digitalRead(flamePin);   // អានស្ថានភាពពី Flame Sensor
+  
+  if (flameState == LOW) {              // រកឃើញភ្លើង (តាមប្រភេទ Sensor ធម្មតា គឺ LOW ពេលមានភ្លើង)
+    Serial.println("រកឃើញភ្លើង! បន្លឺសំឡេងជូនដំណឹង...");
+    
+    digitalWrite(ledPin, HIGH);         // បើក LED
+    tone(buzzerPin, 1500, 400);         // បន្លឺសំឡេងខ្ពស់
+    delay(300);
+    tone(buzzerPin, 1000, 400);         // បន្លឺសំឡេងទាប
+    delay(300);
+  } 
+  else {
+    digitalWrite(ledPin, LOW);          // បិទ LED
+    noTone(buzzerPin);                  // បិទ Buzzer
+    Serial.println("ធម្មតា → គ្មានភ្លើង");
+  }
+  
+  delay(200);   // រង់ចាំតិចតួច ដើម្បីកុំឱ្យ loop លឿនពេក
+}
