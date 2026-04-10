@@ -1,1 +1,42 @@
+/*
+   គម្រោងទី៧៖ Sound Sensor រកសំឡេង (បើខ្លាំងបើក LED)
+   Arduino UNO R4 WiFi
+   រៀនប្រើ Sound Sensor ដើម្បីរកសំឡេង និងគ្រប់គ្រង LED
+*/
 
+int soundPin = A0;      // Sound Sensor ភ្ជាប់នៅ Analog Pin A0
+int ledPin = 13;        // LED ភ្ជាប់នៅ Pin 13
+
+int soundValue = 0;     // រក្សាទុកតម្លៃពី Sound Sensor
+int threshold = 550;    // តម្លៃកំណត់ (Threshold) - កែតាមកន្លែងពិត
+
+void setup() {
+  // កំណត់ Pin របស់ LED ជា OUTPUT
+  pinMode(ledPin, OUTPUT);
+  
+  // បើក Serial Monitor ដើម្បីមើលតម្លៃសំឡេង
+  Serial.begin(9600);
+  Serial.println("គម្រោងទី៧៖ Sound Sensor រកសំឡេង (បើខ្លាំងបើក LED) រួចរាល់!");
+  Serial.println("និយាយខ្លាំង ឬទះដៃ → LED នឹងភ្លឺ");
+}
+
+void loop() {
+  // អានតម្លៃពី Sound Sensor
+  soundValue = analogRead(soundPin);
+  
+  // បង្ហាញតម្លៃនៅ Serial Monitor
+  Serial.print("តម្លៃ Sound Sensor: ");
+  Serial.print(soundValue);
+  
+  // បើសំឡេងខ្លាំងជាង Threshold → បើក LED
+  if (soundValue > threshold) {
+    digitalWrite(ledPin, HIGH);     // បើក LED
+    Serial.println(" → សំឡេងខ្លាំង! បើក LED");
+  } 
+  else {
+    digitalWrite(ledPin, LOW);      // បិទ LED
+    Serial.println(" → សំឡេងធម្មតា → បិទ LED");
+  }
+  
+  delay(100);   // រង់ចាំតិចតួច ដើម្បីកុំឱ្យ Serial Monitor បង្ហាញញាប់ពេក
+}
