@@ -1,1 +1,45 @@
+/*
+   គម្រោងទី៨៖ Vibration Sensor រកការញ័រ (ប្រើ Vibration Sensor + Passive Buzzer)
+   Arduino UNO R4 WiFi
+   រៀនរកការញ័រ និងបន្លឺសំឡេងជូនដំណឹង
+*/
 
+int vibrationPin = 2;     // Vibration Sensor ភ្ជាប់នៅ Digital Pin 2
+int buzzerPin = 8;        // Passive Buzzer ភ្ជាប់នៅ Pin 8
+
+int vibrationState = 0;   // រក្សាទុកស្ថានភាព Vibration Sensor
+
+void setup() {
+  // កំណត់ Pin របស់ Vibration Sensor ជា INPUT
+  pinMode(vibrationPin, INPUT);
+  
+  // កំណត់ Pin របស់ Buzzer ជា OUTPUT
+  pinMode(buzzerPin, OUTPUT);
+  
+  // បើក Serial Monitor ដើម្បីមើលស្ថានភាព
+  Serial.begin(9600);
+  Serial.println("គម្រោងទី៨៖ Vibration Sensor រកការញ័រ + Passive Buzzer រួចរាល់!");
+  Serial.println("បើមានការញ័រ ឬគោះ → Buzzer នឹងបន្លឺសំឡេង");
+}
+
+void loop() {
+  // អានស្ថានភាពពី Vibration Sensor
+  vibrationState = digitalRead(vibrationPin);
+  
+  if (vibrationState == HIGH) {          // រកឃើញការញ័រ
+    Serial.println("រកឃើញការញ័រ! បន្លឺសំឡេងជូនដំណឹង...");
+    
+    // បន្លឺសំឡេងជូនដំណឹង (tone 1000Hz រយៈពេល 300ms)
+    tone(buzzerPin, 1000, 300);
+    delay(400);                          // រង់ចាំរវាងសំឡេង
+    
+    tone(buzzerPin, 1500, 300);          // សំឡេងខ្ពស់ជាងមុន
+    delay(400);
+  } 
+  else {
+    noTone(buzzerPin);                   // បិទសំឡេង
+    Serial.println("ធម្មតា → គ្មានការញ័រ");
+  }
+  
+  delay(100);   // រង់ចាំតិចតួច ដើម្បីកុំឱ្យ loop លឿនពេក
+}
