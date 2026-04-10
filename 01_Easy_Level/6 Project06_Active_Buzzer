@@ -1,1 +1,33 @@
+/*
+   គម្រោងទី៦៖ Active Buzzer បន្លឺសំឡេងសាមញ្ញ
+   Arduino UNO R4 WiFi
+   រៀនប្រើ Active Buzzer ដើម្បីបង្កើតសំឡេងជូនដំណឹង
+*/
 
+int buzzerPin = 8;     // Active Buzzer ភ្ជាប់នៅ Pin 8
+
+void setup() {
+  // កំណត់ Pin របស់ Buzzer ជា OUTPUT
+  pinMode(buzzerPin, OUTPUT);
+  
+  // បើក Serial Monitor ដើម្បីមើលស្ថានភាព
+  Serial.begin(9600);
+  Serial.println("គម្រោងទី៦៖ Active Buzzer បន្លឺសំឡេងសាមញ្ញ រួចរាល់!");
+  Serial.println("Buzzer នឹងបន្លឺសំឡេងខ្លីៗ និងសំឡេងជូនដំណឹង");
+}
+
+void loop() {
+  // បន្លឺសំឡេងខ្លីៗ (Beep) ៣ ដង
+  for (int i = 0; i < 3; i++) {
+    digitalWrite(buzzerPin, HIGH);   // បើក Buzzer
+    Serial.println("Buzzer បន្លឺសំឡេង...");
+    delay(200);                      // សំឡេងខ្លី ០.២ វិនាទី
+    
+    digitalWrite(buzzerPin, LOW);    // បិទ Buzzer
+    delay(300);                      // រង់ចាំរវាងសំឡេង
+  }
+  
+  // រង់ចាំយូរ មុនពេលចាប់ផ្តើមវដ្តថ្មី
+  Serial.println("រង់ចាំ ២ វិនាទី...");
+  delay(2000);
+}
