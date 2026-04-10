@@ -1,1 +1,39 @@
+/*
+   គម្រោងទី៩៖ Tilt Sensor រកទំនោរ (ប្រើ Tilt Sensor Module)
+   Arduino UNO R4 WiFi
+   រៀនរកទំនោរ និងបើក LED ដោយស្វ័យប្រវត្តិ
+*/
 
+int tiltPin = 2;      // Tilt Sensor ភ្ជាប់នៅ Digital Pin 2
+int ledPin = 13;      // LED ភ្ជាប់នៅ Pin 13
+
+int tiltState = 0;    // រក្សាទុកស្ថានភាព Tilt Sensor
+
+void setup() {
+  // កំណត់ Pin របស់ Tilt Sensor ជា INPUT
+  pinMode(tiltPin, INPUT);
+  
+  // កំណត់ Pin របស់ LED ជា OUTPUT
+  pinMode(ledPin, OUTPUT);
+  
+  // បើក Serial Monitor ដើម្បីមើលស្ថានភាព
+  Serial.begin(9600);
+  Serial.println("គម្រោងទី៩៖ Tilt Sensor រកទំនោរ រួចរាល់!");
+  Serial.println("បើ Tilt Sensor ទំនោរ → LED នឹងភ្លឺ");
+}
+
+void loop() {
+  // អានស្ថានភាពពី Tilt Sensor
+  tiltState = digitalRead(tiltPin);
+  
+  if (tiltState == HIGH) {           // រកឃើញទំនោរ (តាមប្រភេទ Sensor ធម្មតា)
+    digitalWrite(ledPin, HIGH);      // បើក LED
+    Serial.println("រកឃើញទំនោរ! → LED ភ្លឺ");
+  } 
+  else {
+    digitalWrite(ledPin, LOW);       // បិទ LED
+    Serial.println("ធម្មតា (ត្រង់) → LED ងងឹត");
+  }
+  
+  delay(200);   // រង់ចាំតិចតួច ដើម្បីកុំឱ្យ Serial Monitor បង្ហាញញាប់ពេក
+}
